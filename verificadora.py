@@ -1,5 +1,6 @@
-
-from nltk.tokenize import sent_tokenize, word_tokenize
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize 
+nltk.download("punkt")
 archivo = input('ingrese el arhivo: ')
 texto = open(archivo,"r",encoding="utf-8") 
 text = texto.read()
@@ -18,5 +19,5 @@ for a in range(0,size):
     if word == 'defProc':
         variable = lista_word[b]
         
-#print(lista_word)
+print(lista_word)
 
