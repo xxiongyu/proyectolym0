@@ -20,7 +20,6 @@ for a in range(0,size):
         indesado = lista_word.index(')',b)  
         for aa in range(b+1,indesado): 
             if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) and lista_word[aa+1] == ',' and (lista_word[aa+2] in list_rango or lista_word[aa+2] in posiciones):  
-                print(lista_word[aa], lista_word[aa+1] , lista_word[aa+2])
                 verificacion 
     if word == 'walk': 
         b = a+1 
