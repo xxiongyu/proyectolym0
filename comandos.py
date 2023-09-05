@@ -1,60 +1,91 @@
 import nltk
-from nltk.tokenize import sent_tokenize, word_tokenize 
+from nltk.tokenize import  word_tokenize 
 nltk.download("punkt")
 archivo = input('ingrese el arhivo: ')
 texto = open(archivo,"r",encoding="utf-8") 
 text = texto.read()
-lista_word = word_tokenize(text)
+lista_word = word_tokenize(text) 
 size = len(lista_word) 
-verificacion = False 
-list_rango = str(list(range(1,100)) )
+verificacion = 0 
+list_rango = str(list(range(1,100))) 
+posiciones = ["x","y","v"]
 list_posicion = ['right','left','front','back'] 
 list_cardinales =['north','south','west','east'] 
-list_commansTurn = ['left','right','around']
-dicc = {} 
-def cod_verification (size):
-    for a in range(0,size):
-        b = a+1
-        c = a+2 
-        d = a+3
-        e = a+4
-        f = a+5
-        word = lista_word[a] 
-        word1 = lista_word[b] 
-        word2 = lista_word[c] 
-        word3 = lista_word[d] 
-        word4 = lista_word[e] 
-        word5 = lista_word[f]
-#verificacion comandos simples    
-        if word == 'jump' and word1== '(' and word2 in list_rango  and word3 == ',' and word4 in list_rango and word5 == ')': 
-            verificacion = True 
-        if word == 'walk' and word1 == '(' and word2 in list_rango  and word3 == ')': 
-            verificacion = True
-        elif word == 'walk' and word1 == '(' and word2 in list_rango and  word3 in list_posicion  and word4 == ')':  
-            verificacion = True
-        elif word == 'walk' and word1 == '(' and word2 in list_rango and  word3 in list_cardinales  and word4 == ')': 
-            verificacion = True
-        if word == 'leap' and word1 == '(' and word2 in list_rango and word3 == ')': 
-            verificacion = True
-        elif word == 'leap' and word1 == '(' and word2 in list_rango and word3 == ',' and word4 in  list_posicion and word5 ==')': 
-            verificacion = True 
-        elif word == 'leap' and word1 == '(' and word2 in list_rango and word3 == ',' and word4 in  list_cardinales and word5 ==')':  
-            verificacion = True
-        if word == 'turn' and word1 =='(' and word2 in list_commansTurn and word3 == ')': 
-            verificacion = True 
-        if word == 'turnto' and word1 == '(' and word2 in list_cardinales and word3 == ')': 
-            verificacion = True 
-        if word == 'drop' and word1 == '(' and word2 in list_rango and word3 == ')': 
-            verificacion = True  
-        if word =='get' and word1 == '('  and word2 in list_rango and word3 == ')': 
-            verificacion = True 
-        if word == 'grab' and word1 == '(' and word2 in list_rango and word3 == ')': 
-            verificacion = True 
-        if word == 'letGo' and word1 == '(' and word2 in list_rango and word3 == ')': 
-            verificacion = True
-        if word == 'nop' and word1 =='(' and word2 == ')': 
-            verificacion = True    
-    return verificacion 
+list_commansTurn = ['left','right','around'] 
+for a in range(0,size):
+    word = lista_word[a]     
+    if word == 'jump': 
+        b = a+1 
+        indesado = lista_word.index(')',b)  
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) and lista_word[aa+1] == ',' and (lista_word[aa+2] in list_rango or lista_word[aa+2] in posiciones):  
+                print(lista_word[aa], lista_word[aa+1] , lista_word[aa+2])
+                verificacion 
+    if word == 'walk': 
+       b = a+1 
+       indesado = lista_word.index(')',b) 
+       for aa in range(b+1,indesado): 
+           if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) : 
+               verificacion 
+           elif (lista_word[aa] in list_rango or lista_word[aa] in posiciones) and lista_word[aa+1] == ',' and lista_word[aa+2] in list_posicion: 
+               verificacion
+           elif (lista_word[aa] in list_rango or lista_word[aa] in posiciones) and lista_word[aa+1] == ',' and lista_word[aa+2] in list_cardinales: 
+               verificacion 
+    if word == 'leap': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) : 
+               verificacion 
+            elif (lista_word[aa] in list_rango or lista_word[aa] in posiciones) and lista_word[aa+1] == ',' and lista_word[aa+2] in list_posicion: 
+               verificacion
+            elif (lista_word[aa] in list_rango or lista_word[aa] in posiciones) and lista_word[aa+1] == ',' and lista_word[aa+2] in list_cardinales: 
+               verificacion 
+    if word == 'turn': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_commansTurn): 
+                verificacion 
+    if word =='turnto': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_cardinales):
+                verificacion 
+    if word == 'drop': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) : 
+               verificacion 
+    if word == 'get': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) : 
+               verificacion 
+    if word == 'grab': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) : 
+               verificacion 
+    if word == 'letGo': 
+        b = a+1 
+        indesado = lista_word.index(')',b) 
+        for aa in range(b+1,indesado): 
+            if (lista_word[aa] in list_rango or lista_word[aa] in posiciones) : 
+               verificacion 
+    if word == 'nop':    
+        b = a+1 
+        c = a+2
+        if b == '(' and c == ')': 
+            verificacion  
+#adelantar condicionales                
+            
+
+            
         
 
 
