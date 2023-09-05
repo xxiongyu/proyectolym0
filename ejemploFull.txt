@@ -28,7 +28,7 @@ defProc myProc (param1, param2, param3)
     {
         walk(1, north)
     } ; 
-    if not facing(north)
+    if not : facing(north)
     {
         turnto(north)
     } else { nop()}; 
@@ -40,7 +40,7 @@ defProc myProc (param1, param2, param3)
     {
         walk(1, north)
     } ;
-    if not not facing(north)
+    if not : not : facing(north)
     {
         turnto(north)
     } else { nop()};
@@ -52,7 +52,7 @@ defProc myProc (param1, param2, param3)
     {
         walk(1, north)
     };
-    if not facing(north)
+    if not : facing(north)
     {
         turnto(north)
     } else { nop()};
@@ -62,7 +62,7 @@ defProc myProc (param1, param2, param3)
         {
             walk(1, front)
         } ; 
-        repeat param1
+        repeat param1 tiMEs
         {
             walk(1, front)
         }
@@ -78,7 +78,7 @@ defProc myProc (param1, param2, param3)
            nop()
         }
     } ;
-    if not facing(north)
+    if not : facing(north)
     {
         turnto(north)
     } else { nop()};
@@ -90,7 +90,7 @@ defProc myProc (param1, param2, param3)
     {
        letGo(1)
     } ;
-    if not facing(north)
+    if not : facing(north)
     {
         turnto(north)
     } else { nop()};
@@ -101,7 +101,7 @@ defProc myProc (param1, param2, param3)
     {
         drop(1)
     } ;
-    if not facing(north)
+    if not : facing(north)
     {
         get(1)
     }else { nop()}
