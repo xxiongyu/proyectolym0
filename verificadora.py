@@ -1,24 +1,24 @@
 from nltk.tokenize import word_tokenize
 #archivo = input('ingrese el arhivo: ')
-archivo = input('ingrese el arhivo: ')
+archivo = input('ingrese el arhivo: ') #Le pedimos al usuario ingresar el archivo
 texto = open(archivo,"r",encoding="utf-8") 
 text = texto.read()
-lista_word = word_tokenize(text)
+lista_word = word_tokenize(text) #Lo tokenizamos
 size = len(lista_word)
 dicc_publico = {}
 dicc_privado = {}  
 verificacion = 0 
-list_rango = str(list(range(1,100))) 
-posiciones = ["x","y","v"]
-list_posicion = ['right','left','front','back'] 
-list_cardinales =['north','south','west','east'] 
-list_commansTurn = ['left','right','around']  
-lista_comandos = ['jump','walk','leap','turn','turnto','drop','get','grab','letGo','nop']  
-def RevisionCompletitud(list, index, qc, Findex):
-    if qc < -1:
-        return -1000
-    elif qc == 0:
-        return Findex
+list_rango = str(list(range(1,100))) # lista de todos los numeros del 1 al 99 para algunos  parametros
+posiciones = ["x","y","v"] #lista de parametros para comandos
+list_posicion = ['right','left','front','back'] #lista de parametros para comandos
+list_cardinales =['north','south','west','east'] #lista de parametros para comandos
+list_commansTurn = ['left','right','around']  #lista de parametros para comandos
+lista_comandos = ['jump','walk','leap','turn','turnto','drop','get','grab','letGo','nop']  #lista de parametros para comandos
+def RevisionCompletitud(list, index, qc, Findex): #En esta funcion, intentamos verificar si las parejas de {} estan completas
+    if qc < -1:                                   #Sin embargo tuvimos un problema al final que no pudimos resolver
+        return -1000                              #Para ello, usamos la recursion y analizar los casos cuando se encuentra 
+    elif qc == 0:                                 # un primer {, cuando se encuentra un } pero con varios { antes de el    
+        return Findex                             # y para cuando esta un} sin ningun{ antes de el
     else:
         if list[index]== '{':
             RevisionCompletitud(list, index+1, qc+1, Findex)
@@ -32,7 +32,7 @@ def RevisionCompletitud(list, index, qc, Findex):
         else:
             RevisionCompletitud(list, index, qc-1, index)
 
-for a in range(0,size):
+for a in range(0,size): #En este ciclo, calificacmos las variables y comandos que puedan entrar del archivo
     word = lista_word[a]
     if word == 'defVar':
         b = a+1
@@ -172,7 +172,8 @@ for a in range(0,size):
                             verificacion+1
 if verificacion > 1:
     print('False')  
-            
+else: 
+    print('True')            
 
 
 
