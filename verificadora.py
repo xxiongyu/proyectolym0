@@ -1,31 +1,34 @@
 
-from nltk.tokenize import sent_tokenize, word_tokenize
-import funciones
+from nltk.tokenize import word_tokenize
 #archivo = input('ingrese el arhivo: ')
 archivo = 'ejemploFull.txt'
 texto = open(archivo,"r",encoding="utf-8") 
 text = texto.read()
 lista_word = word_tokenize(text)
 size = len(lista_word)
-dicc = {}
-print(lista_word[243],lista_word[244],lista_word[245],lista_word[246])
+dicc_publico = {}
+dicc_privado = {}
 
-def RevisionCompletitud(llavedefuncion, indesadofuncion, lista):
-    originalindesado = indesadofuncion
-    sentinela = None
-    indesadofuncion = indesadofuncion
-    vigilante = 0
-    for aa in range(llavedefuncion+1,indesadofuncion):
-        if lista[aa] == '{':
-            sentinela = indesadofuncion
-            indesadofuncion = lista.index('}',sentinela+1)
-            vigilante += 1
-            print(indesadofuncion)
-    if vigilante >= 1:
-        RevisionCompletitud(sentinela+1, indesadofuncion, lista)
-    if vigilante == 0:
-        return originalindesado
-
+def RevisionCompletitud(list, index, qc, Findex):
+    print(qc)
+    print(index)
+    print('-----------------')
+    if qc < -1:
+        return -1000
+    elif qc == 0:
+        return Findex
+    else:
+        if list[index]== '{':
+            RevisionCompletitud(list, index+1, qc+1, Findex)
+        elif list[index] == 'defProc':
+            RevisionCompletitud(list, index+1, -10, Findex)
+        elif list[index] == '}' and qc>1:
+            RevisionCompletitud(list, index+1, qc-1, Findex)
+        elif list[index] != '{' and list[index] != '}':
+            RevisionCompletitud(list, index+1, qc, Findex)
+        
+        else:
+            RevisionCompletitud(list, index, qc-1, index)
 
 for a in range(0,size):
     word = lista_word[a]
@@ -34,7 +37,7 @@ for a in range(0,size):
         c = a+2
         variable = lista_word[b]
         valor = lista_word[c]
-        dicc[variable] = valor
+        dicc_publico[variable] = valor
     
     if word == 'defProc':
         b = a+1
@@ -45,16 +48,15 @@ for a in range(0,size):
         for aa in range(c+1,indesado):
             if lista_word[aa] != ',':
                 lista.append(lista_word[aa])
-        dicc[variable]=lista
+        dicc_privado[variable]=lista
         llavedefuncion = indesado+1
         if lista_word[llavedefuncion] == '{':
             indesadofuncion = lista_word.index('}',llavedefuncion)
-            coordenada_complititud = RevisionCompletitud(llavedefuncion, indesadofuncion, lista_word)
-            print(coordenada_complititud)
+            coordenada_complititud = RevisionCompletitud(lista_word, llavedefuncion, 1, 0)
             for bb in range(llavedefuncion, coordenada_complititud):
-                valores = dicc.get(variable)
-                print(valores)
-
+                v_publico = dicc_publico.keys()
+                v_privado = dicc_privado.get(variable)
+                
 
 
 
@@ -62,5 +64,5 @@ for a in range(0,size):
         
             
 
-#print(lista_word)
+
 
